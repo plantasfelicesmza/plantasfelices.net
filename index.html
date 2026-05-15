@@ -1,11 +1,679 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">          
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plantas Felices</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Plantas Felices — Tu hogar tiene ganas de estar vivo</title>
+    <meta name="description" content="Plantas seleccionadas con criterio, empacadas con cuidado y acompañadas con asesoría real. Transformá tu hogar con vida verdadera." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Lexend+Exa:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+<style>
+    html { scroll-behavior: smooth; }
+    :root {
+      --green-dark:     #1B301F;
+      --green-middle:   #10472B;
+      --green-light:    #3E8C33;
+      --green-flash:    #C6D141;
+      --blue-dark:      #2E5A6E;
+      --blue-light:     #9FD6D2;
+      --pink:           #DB828F;
+      --orange-dark:    #E59B6C;
+      --orange-light:   #E9C46A;
+      --cream:          #f5f0e8;
+      --white:          #fafaf7;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+      --fprimary: 'Jua', system-ui, sans-serif;
+      --fsecondary:  'Lexend Exa', system-ui, sans-serif;
+      --fdefault:  'Open Sans', system-ui, sans-serif;
+
+    }
+    body {
+      font-family: var(--fdefault);
+      background: var(--white);
+      color: var(--green-middle);
+      overflow-x: hidden;
+      font-weight: 300;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33%       { transform: translateY(-8px) rotate(1.5deg); }
+      66%       { transform: translateY(-4px) rotate(-1deg); }
+    }
+    @keyframes leafSway {
+      0%, 100% { transform: rotate(-3deg) scale(1); }
+      50%       { transform: rotate(3deg) scale(1.02); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes lineGrow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes blobPulse {
+      0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      50%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── NAV ─── */
+    nav{ 
+      background: var(--orange-dark);
+      font-family: var(--fsecondary);
+      font-size: 13px;
+      font-weight: 400;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+    .nav-item { padding-left: 10px;}
+    .nav-link { color: var(--green-middle);}
+    .nav-link:hover {color: var(--white) !important;}
+    .btn {
+      font-size: 13px;
+      font-family: var(--fsecondary);
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 400;
+      transition: background 0.25s, transform 0.2s !important;
+    }
+    .btn:hover {transform: scale(1.03); }
+    .nav-cta {
+      background: var(--green-flash);
+    }
+    .nav-cta:hover { background: var(--green-light);}
+
+    
+    .block { padding: 60px 0px;}
+ 
+    /* ─── HERO ─── */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s var(--ease-out-expo) 0.2s both;
+      font-family: var(--fsecondary);
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+    }
+  
+    .bg-hero { 
+      background: var(--orange-light) linear-gradient(90deg,rgba(229, 155, 108, 0.3) 0%, rgba(233, 196, 106, 1) 27%, rgba(233, 196, 106, 1) 66%, rgba(219, 130, 143, 0.4) 100%);
+    }
+    .bg-hero .hero-eyebrow::before { background: var(--blue-dark);}
+
+    .hero-title {
+      /*font-size: clamp(44px, 5.5vw, 72px);*/
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      font-family: var(--fprimary) ;
+      animation: fadeUp 0.9s var(--ease-out-expo) 0.35s both;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--pink);
+    }
+    .hero-subtitle{ animation: fadeUp 0.9s var(--ease-out-expo) 0.35s both; margin-bottom: 0px;}
+   .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadeUp 1s var(--ease-out-expo) 0.65s both;
+    }
+    .btn-hero-p {
+      background: var(--pink);
+      color: var(--white);
+      border: 1px solid var(--pink);
+    }
+    .btn-hero-p:hover {
+      color: var(--green-middle);
+      background: var(--blue-light);
+      border: 1px solid var(--blue-light);
+    }
+    .btn-hero-s {
+      background: transparent;
+      color: var(--green-middle);
+      border: 1px solid var(--green-middle);
+    }
+    .btn-hero-s:hover {
+      color: var(--green-middle);
+      background: var(--blue-light);
+      border: 1px solid var(--blue-light);
+    }
+    .hero-social {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: fadeUp 1s var(--ease-out-expo) 0.8s both;
+    }
+    .hero-social-label {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: var(--fsecondary);
+    }
+    .social-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      color: var(--green-middle);
+      border: 1px solid var(--green-middle);
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .social-chip:hover {
+      border-color: var(--green-middle);
+      color: var(--green-middle);
+      background: var(--blue-light);
+    }
+    .social-chip svg { width: 13px; height: 13px; fill: currentColor; }
+    .hero-card-img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--r-xl);
+        overflow: hidden;
+        position: relative;
+        animation: float 6s ease-in-out infinite, scaleIn 1.2s var(--ease-out-expo) 0.4s both;
+    }
+
+    /* ─── STATICS ─── */
+    .bg-statics { background: var(--cream) }
+    .bg-statics .hero-eyebrow::before { background: var(--blue-dark);}
+    .bg-statics h2{ font-family: var(--fprimary); animation: fadeUp 0.9s var(--ease-out-expo) 0.35s both;}
+    .proof-item {
+      padding: 16px;
+      border-right: 1px solid var(--orange-light);
+    }
+    .proof-list .proof-item:last-child { border-right: none; }
+
+    .proof-num {
+      font-family: var(--fprimary);
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--orange-light);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .proof-num.star::after {
+      content: '★';
+      color: var(--pink);
+      font-size: 30px;
+      vertical-align: top;
+    }
+    .proof-lbl {
+      font-family: var(--fsecondary);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+
+    /* ─── 3 REASONS ─── */
+    .bg-reasons { background: var(--orange-light);}
+    .bg-reasons .hero-eyebrow::before { background: var(--blue-dark);}
+    .bg-reasons .hero-title em {
+      font-style: italic;
+      color: var(--pink);
+    }
+    .bg-reasons p {font-size: 0.95rem;}
+    .card {
+      border: 1px solid var(--orange-dark);
+      transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s; 
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(229,155,108,0.74);
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange-dark), var(--blue-light));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+    .card:hover::after { transform: scaleX(1); }
+    .card h5 {
+      font-family: var(--fsecondary);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .card p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+  /* ─── CANALES ─── */
+    .bg-canal { background: var(--green-light);}
+    .bg-canal .hero-eyebrow { color: var(--orange-light);}
+    .bg-canal .hero-eyebrow::before { background: var(--orange-light);}
+
+    .bg-canal h2{ font-family: var(--fprimary);color: var(--orange-light);}
+    .bg-canal .hero-title em {font-style: italic; color: var(--green-flash);}
+    .bg-canal .hero-subtitle {font-size: 1rem; color: var(--orange-light); font-family: var(--fsecondary); margin-top: 12px;margin-bottom: 0px}
+    .channel-main {
+      background: var(--green-dark);
+      padding: 48px 56px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .channel-main h3 {
+      font-family: var(--fprimary);
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .channel-main p {
+      font-family: var(--fsecondary);
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(200,230,204,0.7);
+      line-height: 1.7;
+      max-width: 620px;
+      margin-bottom: 0px;
+    }
+    .bg-canal .btn-hero-s{ font-size: 12px; font-family: var(--fdefault); padding: 8px 14px;}
+    .bg-canal .card{
+      background-color: var(--green-flash);
+    }
+    .bg-canal .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(198, 209, 65, 0.74);
+    }
+    .h-lg-100-md-0 { height: 100%; }
+
+
+    /* ─── CONTACT ─── */
+    .bg-contact { background: var(--green-dark);}
+    .bg-contact .hero-eyebrow { color: var(--orange-light);}
+    .bg-contact .hero-eyebrow::before { background: var(--orange-light);}
+    .bg-contact h2 { font-family: var(--fprimary);color: var(--orange-light);}
+    .bg-contact .hero-title em {
+      font-style: italic;
+      color: var(--green-flash);
+    }
+    .bg-contact .hero-subtitle {font-size: 1rem; color: var(--orange-light); font-family: var(--fsecondary); margin-top: 12px;margin-bottom: 0px}
+    .bg-contact .btn-hero-s {border: 1px solid var(--cream); color: var(--cream);}
+    .bg-contact .btn-hero-s:hover {color: var(--green-middle);}
+
+ 
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--green-middle);
+      color: var(--cream);
+      padding: 40px 80px;
+      border-top: 1px solid rgba(143,202,154,0.1);
+      font-size: 12px;
+  }
+  .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      justify-content: center;
+    }
+  .footer-links a {
+    color: var(--cream);
+      text-decoration: none;
+      transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(200,230,204,0.7); }
+  .footer-copy {
+      color: rgba(200,230,204,0.25);
+  }
+
+ /* ─── RESPONSIVE ─── */   
+@media (max-width: 576px) {
+  .navbar-brand img{width: 120px;}
+  .proof-list .proof-item { border-right: none; border-bottom: 1px solid var(--orange-light); }
+  .proof-list .proof-item:last-child { border-bottom: none; }
+}
+@media (max-width: 767px) {
+  .block { padding: 40px 0px;}
+  .hero-card-img {margin-top: 20px;}
+  .proof-list .proof-item:nth-child(even) { border-right: none; } 
+  .proof-item:nth-child(1 of .proof-item),
+  .proof-item:nth-child(2 of .proof-item) {border-bottom: 1px solid var(--orange-light);}
+  .card {display: flex; flex-direction: row; align-items: center; margin-bottom: 30px;}
+  .card img {width: 30%;flex-shrink: 0 !important;object-fit:cover; align-self:stretch;}
+  .h-lg-100-md-0 { height: auto; } 
+}
+</style>
 </head>
-<body>
-    <h1>plantas felices landing page wip</p>
-</body>
+  <body class="d-flex flex-column vh-100">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="https://plantasfelices.net/imgs/logoH_plantasFelices.webp" alt="Plantas Felices" width="192" height="auto" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link" href="#">Nuestro Equipo</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Contacto</a>
+                </li>
+                <li class="nav-item"><a class="nav-link nav-cta btn" href="https://plantasfelices.mitiendanube.com" target="_blank">Ver tienda →</a></li>
+            </ul> 
+            </div>
+        </div>
+    </nav>
+    <main class="flex-shrink-0">
+       <!-- HERO -->
+    <div class="block bg-hero">
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <h3 class="hero-eyebrow">¿Sabías que...?</h3>
+                <h1 class="hero-title">Tu hogar tiene ganas de <em>plantas felices.</em></h1>
+                <p class="hero-subtitle pb-2">Cuidamos, recuperamos y acompañamos plantas y personas, creando espacios verdes que generan bienestar. Enseñamos y guiamos para que cada planta pueda brindar lo mejor de sí.</p>
+                <div class="hero-ctas">
+                    <a href="https://plantasfelices.mitiendanube.com/" target="_blank" class="btn btn-hero-p">Quiero mis plantas felices hoy →</a>
+                    <a href="tel:+5492617478884" class="btn btn-hero-s">Whatsappeanos &#x202A;+54 9 261 747-8884</a>
+                </div>
+                <div class="hero-social pt-3">
+                    <span class="hero-social-label">Comunidad en</span>
+                    <a href="https://www.instagram.com/plantasfelices.mza" class="social-chip" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    Instagram
+                    </a>
+                    <a href="https://www.facebook.com/plantasfelices.mza" class="social-chip" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    Facebook
+                    </a>
+                  <a href="https://www.linkedin.com/company/plantas-felices/" class="social-chip" target="_blank">
+  <svg viewBox="0 0 24 24">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+  LinkedIn
+</a>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="hero-card-img"><img src="https://plantasfelices.net/imgs/plantasfelices-presentacion.gif" alt="Plantas Felices Presentación" width="100%" height="auto" /></div>   
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- STATICS -->
+    <div class="block bg-statics" id="stats">
+        <div class="container">
+            <div class="row proof-list">
+                <h3 class="hero-eyebrow">Algunas estadísticas</h3>
+                <h2 class="text-center mb-5">Números que hablan por nosotros</h2>
+                <div class="col-sm-6 col-md-3 proof-item text-center"><span class="proof-num" data-target="100">+100</span><span class="proof-lbl">diseño de<br>jardines</span></div>
+                <div class="col-sm-6 col-md-3 proof-item text-center"><span class="proof-num" data-target="150">+150</span> <span class="proof-lbl">alquileres de plantas<br>para eventos y oficinas</span></div>  
+              <div class="col-sm-6 col-md-3 proof-item text-center"><span class="proof-num star" data-target="5">5</span><span class="proof-lbl">en atención<br>y postventa</span></div>     
+                <div class="col-sm-6 col-md-3 proof-item text-center"><span class="proof-num" data-target="500">+500</span><span class="proof-lbl">plantas dadas de alta<br>en hogares, locales comerciales y oficinas</span></div>  
+            </div>
+        </div>
+    </div>
+    <!-- 3 REASONS --> 
+    <div class="block bg-reasons">
+        <div class="container">
+            <div class="row align-items-center">
+              <h3 class="hero-eyebrow reveal">¿Por qué elegirnos?</h3>
+                <div class="col-sm-12 col-md-6">
+                    <h2 class="hero-title reveal reveal-delay-1">Tres razones para <em>confiar en nosotros.</em></h2>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <p class="hero-subtitle reveal-delay-2">Somos el puente entre la naturaleza y tu espacio — con criterio, cuidado y acompañamiento real.</p>
+                </div>
+            </div>
+            <div class="row"><span class="py-md-2 py-lg-3">&nbsp;</span></div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="card reveal reveal-delay-1">
+                  <img src="https://plantasfelices.net/imgs/tres-razones_curaduria.webp" alt="" role="presentation">
+                  <div class="card-body">
+                    <h5>Elegidas con amor</h5>
+                    <p>Cada planta llega a vos después de un proceso de selección cuidadoso: salud, tamaño y armonía con tu espacio.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="card reveal reveal-delay-2">
+                  <img class="card-img-top" src="https://plantasfelices.net/imgs/tres-razones_hogar.webp" alt="" role="presentation">
+                  <div class="card-body">
+                    <h5>Plantas para tu hogar</h5>
+                    <p>Tenemos plantas para todos los espacios: desde un estante pequeño hasta un living que pide más verde y vida.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="card reveal reveal-delay-3">
+                  <img class="card-img-top" src="https://plantasfelices.net/imgs/tres-razones_asesoria.webp" alt="" role="presentation">
+                  <div class="card-body">
+                    <h5>Te acompañamos siempre</h5>
+                    <p>La compra no es el final. Te acompañamos con consejos de riego, luz y sustrato vía WhatsApp cuando lo necesités.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <!-- CANALES --> 
+    <div class="block bg-canal">
+        <div class="container">
+            <div class="row">
+                <h3 class="hero-eyebrow text-center reveal">Dónde encontrarnos</h3>
+                <h2 class="hero-title text-center reveal reveal-delay-1">Cada canal,<br>una <em>experiencia</em></h2>    
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-8 col-lg-6 mx-auto text-center">
+                <p class="hero-subtitle reveal reveal-delay-2">Comprar, consultar o simplemente inspirarte — hay un espacio para cada momento y cada necesidad tuya.</p>
+              </div>
+            </div>
+            <div class="row"><span class="py-md-2 py-lg-3">&nbsp;</span></div>
+            <div class="row">
+              <div class="col-12">
+                <div class="channel-main reveal rounded-4">
+                  <div>
+                    <h3>Tienda Plantas Felices</h3>
+                    <p>Catálogo completo, stock actualizado en tiempo real, compra 100% segura. El lugar donde tus próximas plantas favoritas te están esperando.</p>
+                  </div>
+                  <a href="https://plantasfelices.mitiendanube.com/" class="btn btn-hero-p">Ir a la tienda →</a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="card h-lg-100-md-0 reveal reveal-delay-1">
+                  <div class="card-body">
+                    <h5>WhatsApp</h5>
+                    <p>¿No sabés qué planta elegir para tu espacio? Contanos cómo es tu rincón y te recomendamos la ideal en minutos.</p>
+                    <a href="tel:+5492617478884" class="btn btn-hero-s">Whatsappeanos</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="card h-lg-100-md-0 reveal reveal-delay-2">
+                   <div class="card-body">
+                    <h5>Instagram</h5>
+                    <p>Catálogo visual, tips de cuidado diario y la comunidad verde que te va a inspirar a ir por más verde en tu vida.</p>
+                    <a href="https://www.instagram.com/plantasfelices.mza" class="btn btn-hero-s">Seguinos</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="card h-lg-100-md-0 reveal reveal-delay-3">
+                  <div class="card-body">
+                    <h5>Facebook</h5>
+                    <p>Novedades, ofertas especiales y una comunidad donde compartir tus logros con cada nueva hoja que aparece.</p>
+                    <a href="https://www.facebook.com/plantasfelices.mza" class="btn btn-hero-s">Unite</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="card h-lg-100-md-0 reveal reveal-delay-4">
+                  <div class="card-body">
+                    <h5>Linkedin</h5>
+                    <p>Novedades del negocio, tendencias del mundo verde y contenido para ayudar a tomar decisiones adaptadas a tu hogar.</p>
+                    <a href="https://www.linkedin.com/company/plantas-felices/" class="btn btn-hero-s">Conectemos</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+             
+        </div>
+    </div>
+     <!-- CONTACT --> 
+    <div class="block bg-contact">
+        <div class="container">
+            <div class="row">
+                <h3 class="hero-eyebrow text-center reveal">Es hora de hacer el cambio</h3>
+                  <h2 class="hero-title text-center mb-5 reveal reveal-delay-1">¿Tu hogar ya sabe<br>lo que le <em>falta?</em></h2>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-8 col-lg-6 mx-auto text-center">
+                <p class="text-center hero-subtitle reveal reveal-delay-2">Una sola planta cambia la energía de un cuarto entero. Encontrá la tuya hoy y empezá a notar la diferencia desde el primer día.</p>
+              </div>
+            </div>
+            <div class="row"><span class="py-md-1 py-lg-2">&nbsp;</span></div>
+            <div class="row reveal reveal-delay-3">
+              <div class="col-sm-12 col-md-6 text-sm-center text-md-center text-lg-end">
+                <a href="https://plantasfelices.mitiendanube.com" class="btn btn-hero-p">Explorar el catálogo completo →</a>
+              </div>
+              <div class="col-sm-12 col-md-6 text-sm-center text-md-center text-lg-start">
+                <a href="tel:+5492617478884" class="btn btn-hero-s">Consultar por WhatsApp →</a>
+            </div>
+        </div>
+    </div>
+    </main>
+    <footer class="mt-auto text-center">
+      <img src="https://plantasfelices.net/imgs/logoBlanco_plantasFelices.png" alt="Plantas Felices" width="96" height="auto" class="mb-2" />
+      <ul class="footer-links">
+        <li><a href="https://plantasfelices.mitiendanube.com/" target="_blank">Tienda</a></li>
+        <li><a href="tel:+5492617478884">WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/plantasfelices.mza" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/plantasfelices.mza" target="_blank">Facebook</a></li>
+        <li><a href="https://www.linkedin.com/company/plantas-felices/" target="_blank">LinkedIn</a></li>
+      </ul>
+        <p>&copy; <span id="year">2026</span> Plantas Felices. Todos los derechos reservados.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script>
+
+  // ── Reveal on scroll ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+  // ── Animated counters ──
+    function animateCounter(el, target, suffix = '') {
+      const start = Date.now();
+      const duration = 1800;
+      const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+      const tick = () => {
+        const elapsed = Date.now() - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.round(easeOut(progress) * target);
+        el.textContent = (value === target && target >= 100 ? '+' : '') + value + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    const statsEl = document.getElementById('stats');
+    let countersStarted = false;
+    const statsObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !countersStarted) {
+        countersStarted = true;
+        document.querySelectorAll('[data-target]').forEach(el => {
+          const target = parseInt(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          animateCounter(el, target, suffix);
+        });
+      }
+    }, { threshold: 0.5 });
+    statsObserver.observe(statsEl);
+
+    // ── Pillar cards tilt effect ──
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);
+        const dy = (e.clientY - cy) / (rect.height / 2);
+        card.style.transform = `translateY(-6px) rotateX(${-dy * 4}deg) rotateY(${dx * 4}deg)`;
+        card.style.transition = 'transform 0.1s';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+      });
+    });
+
+
+  // year in footer
+  const yearSpan = document.getElementById('year');
+  yearSpan.textContent = new Date().getFullYear();
+
+</script>
+
+  </body>
 </html>
