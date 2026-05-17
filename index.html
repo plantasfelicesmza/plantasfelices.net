@@ -30,7 +30,7 @@
       --pf-shadow-xs:    0 0 0 3px rgba(16, 71, 43,.30);
       --pf-shadow-sm:    0 2px 12px rgba(16, 71, 43,.30);
       --pf-shadow-md:    0 6px 28px rgba(16, 71, 43,.34);
-      --pf-shadow-lg:    0 16px 48px rgba(16, 71, 43,.18);
+      --pf-shadow-lg:    0 16px 48px rgba(16, 71, 43,.34);
 
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --pf-transition:   .35s cubic-bezier(.4,0,.2,1);
@@ -291,14 +291,24 @@
       transform: translateY(-3px) scale(1.1);
     }
     .social-chip svg { width: 13px; height: 13px; fill: currentColor; }
-    
     .hero-card-img {
         width: 100%;
         height: auto;
         position: relative;
-       animation: float 6s ease-in-out infinite, scaleIn 1.2s var(--ease-out-expo) 0.4s both;
+        animation: float 6s ease-in-out infinite, scaleIn 1.2s var(--ease-out-expo) 0.4s both;
         display: flex;
         justify-content: center;
+        align-items: center;
+    }
+    .hero-card-img video{
+      border-radius: 40px;
+      box-shadow: var(--pf-shadow-lg);
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 3/3;
+      object-fit: cover;
     }
 
     .hero-card-img::before {
@@ -314,17 +324,6 @@
       33% { border-radius: 70% 30% 50% 50% / 50% 60% 40% 50%; transform: translateY(-12px); }
       66% { border-radius: 30% 70% 30% 70% / 60% 30% 70% 40%; transform: translateY(6px); }
     }
-    .hero-card-img img{
-      border-radius: 40px;
-      box-shadow: var(--pf-shadow-lg);
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 400px;
-      aspect-ratio: 3/3;
-      object-fit: cover;
-    }
-
     /* ─── STATICS ─── */
     .bg-statics { background: var(--cream) }
     .bg-statics .hero-eyebrow::before { background: var(--blue-dark);}
@@ -603,7 +602,7 @@
 }
 @media (max-width: 767px) {
   .block { padding: 40px 0px;}
-  .hero-card-img {margin-top: 20px;}
+  .hero-card-img {margin-top: 30px;margin-bottom: 20px;}
   .proof-list .proof-item:nth-child(even) { border-right: none; } 
   .proof-item:nth-child(1 of .proof-item),
   .proof-item:nth-child(2 of .proof-item) {border-bottom: 1px solid var(--orange-light);}
@@ -668,7 +667,12 @@
                   </div>
               </div>
               <div class="col-sm-12 col-md-6">
-                  <div class="hero-card-img reveal delay-2"><img src="https://plantasfelices.net/imgs/plantasfelices-presentacion.gif" alt="Plantas Felices Presentación de Servicios" width="100%" height="auto" fetchpriority="high"/></div>   
+                <div class="hero-card-img reveal delay-2">
+                  <video autoplay loop muted playsinline>
+                  <source src="https://plantasfelices.net/imgs/plantas_felices.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                </div>
               </div>
           </div>
           </div>
