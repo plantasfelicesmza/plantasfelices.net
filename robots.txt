@@ -1,16 +1,12 @@
-# Robots.txt for https://www.plantasfelices.net
+# Robots.txt for https://plantasfelices.net
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.plantasfelices.net/sitemap.xml
+Sitemap: https://plantasfelices.net/sitemap.xml
 
 # AI/LLM friendly content
-# See https://llmstxt.org for the llms.txt specification
-# llms.txt provides curated content for AI assistants and LLMs
-
-# Allow AI crawlers to access content
 User-agent: GPTBot
 Allow: /
 
@@ -35,10 +31,4 @@ Allow: /
 User-agent: Cohere-ai
 Allow: /
 
-# Content Signals - declare AI content usage preferences
-# See https://contentsignals.org/ and https://datatracker.ietf.org/doc/draft-romm-aipref-contentsignals/
 Content-Signal: ai-train=yes, search=yes, ai-input=yes
-
-# AI-friendly content locations
-# - /llms.txt - Curated overview for AI/LLMs (markdown)
-# - /llms-full.txt - Full expanded content for larger context windows
